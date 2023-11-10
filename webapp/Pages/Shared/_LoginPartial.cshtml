@@ -1,0 +1,8 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+<ul class="navbar-nav">
+    <li class="nav-item">
+        @* Need to add claim for Name (default: http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name) for this. *@
+        Hello @(User.Identity?.Name ?? "Unknown")!
+    </li>
+</ul>
