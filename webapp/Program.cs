@@ -14,7 +14,7 @@ builder.Services.AddAuthentication(sharedOptions =>
         sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         sharedOptions.DefaultChallengeScheme = WsFederationDefaults.AuthenticationScheme;
     })
-    .AddWsFederation(options =>
+    .AddWsFederation(async options =>
     {
         options.Wtrealm = builder.Configuration["wsfed:realm"];
         options.MetadataAddress = builder.Configuration["wsfed:metadata"];
@@ -35,7 +35,7 @@ builder.Services.AddAuthentication(sharedOptions =>
         // 10.0.17763.4644
 
         // Initialize config to "resolve" issue:
-        SetupTokenValidationParametersAsync(options);
+        await SetupTokenValidationParametersAsync(options);
 
     })
     .AddCookie();
@@ -75,7 +75,7 @@ app.Run();
 /// See <see cref="Microsoft.AspNetCore.Authentication.WsFederation.WsFederationHandler.SetupTokenValidationParametersAsync()"/> 
 /// Verifying missing configuration / initialization as a possible cause.
 /// </remarks>
-static async void SetupTokenValidationParametersAsync(WsFederationOptions options)
+static async Task SetupTokenValidationParametersAsync(WsFederationOptions options)
 {
     // Operate on params themselves for this (one-time) initialization.
     var tokenValidationParameters = options.TokenValidationParameters;
