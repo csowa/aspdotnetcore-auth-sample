@@ -81,9 +81,9 @@ static async void SetupTokenValidationParameters(WsFederationOptions options)
     var tokenValidationParameters = options.TokenValidationParameters;
 
     // ConfigurationManager not present at point this is called, so add here, *** with metadata configuration set in caller ***.
-    tokenValidationParameters.ConfigurationManager = new ConfigurationManager<WsFederationConfiguration>(options.MetadataAddress, new WsFederationConfigurationRetriever());
+    options.ConfigurationManager = new ConfigurationManager<WsFederationConfiguration>(options.MetadataAddress, new WsFederationConfigurationRetriever());
 
-    var _configuration = await tokenValidationParameters.ConfigurationManager.GetBaseConfigurationAsync(CancellationToken.None);
+    var _configuration = await options.ConfigurationManager.GetConfigurationAsync(CancellationToken.None);
 
     var issuers = new[] { _configuration.Issuer };
 
